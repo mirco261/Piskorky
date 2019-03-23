@@ -143,37 +143,98 @@ namespace PiskvorkyGenius
 
             //Zistovanie vyhry po diagonále zľava doprava
             #region 
-            for (int i = 0; i < lenght; i++)
+            for (int i = 0 ; i < lenght; i++)
             {
-                //zisťujem, či sa v políčku nachádza znak hráča
-                if (Gameboard[i, i] == tick)
+                //prechádzam jednotlivé stĺpce
+                for (int j = 0; j < lenght; j++)
                 {
-                    //ak sa nachádza na predchádzajúcom políčku znak hráča, pridám mu bod
-                    if (lastTick == tick)
+                    //zisťujem, či sa v políčku nachádza znak hráča
+                    if (Gameboard[i, j] == tick)
                     {
-                        bod++;
-                        Debug.Write($"\nBody v diagonale: {bod}");
-                        lastTick = tick;
+                        int k = i;
+                        int l = j;
+                        //ak sa nachádza na predchádzajúcom políčku znak hráča, pridám mu bod
+                        do
+                        {
+                            //Prepožičal som hodnoty kde sa nachádza aktuálne check a pozerám, či sa vpravo dole diagonálne nič nenachádza
+                            if (Gameboard[k, l] == tick)
+                            {
+                                bod++;
+                                Debug.Write($"\nBody v diagonale L-P{i}: {bod}");
+                            }
+                            else
+                            {
+                                break;
+                            }
+                            k++;
+                            l++;
+                        } while (k< lenght && l<lenght);
+
+                        //Zistovanie či hráč vyhral alebo nie
+                        if (bod == body)
+                        {
+                            Debug.Write($"\nHráč: {tick} vyhráva");
+                            return true;
+                        }
+                        else
+                        {
+                            continue;
+                            return false;
+                        }
                     }
                     else
                     {
-                        lastTick = "";
-                    }
-                    //Zistovanie či hráč vyhral alebo nie
-                    if (bod == body)
-                    {
-                        Debug.Write($"\nHráč: {tick} vyhráva");
-                        return true;
-                    }
-                    else
-                    {
-                        continue;
-                        return false;
+                        bod = 0;
                     }
                 }
-                else
+            }
+            #endregion
+
+            //Zistovanie vyhry po diagonále sprava dolava
+            #region 
+            for (int i = 0; i < lenght; i++)
+            {
+                //prechádzam jednotlivé stĺpce
+                for (int j = 0; j < lenght; j++)
                 {
-                    bod = 0;
+                    //zisťujem, či sa v políčku nachádza znak hráča
+                    if (Gameboard[i, j] == tick)
+                    {
+                        int k = i;
+                        int l = j;
+                        //ak sa nachádza na predchádzajúcom políčku znak hráča, pridám mu bod
+                        do
+                        {
+                            //Prepožičal som hodnoty kde sa nachádza aktuálne check a pozerám, či sa vpravo dole diagonálne nič nenachádza
+                            if (Gameboard[k, l] == tick)
+                            {
+                                bod++;
+                                Debug.Write($"\nBody v diagonale P-L{i}: {bod}");
+                            }
+                            else
+                            {
+                                break;
+                            }
+                            k++;
+                            l--;
+                        } while (k < lenght && l < lenght);
+
+                        //Zistovanie či hráč vyhral alebo nie
+                        if (bod == body)
+                        {
+                            Debug.Write($"\nHráč: {tick} vyhráva");
+                            return true;
+                        }
+                        else
+                        {
+                            continue;
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        bod = 0;
+                    }
                 }
             }
             #endregion

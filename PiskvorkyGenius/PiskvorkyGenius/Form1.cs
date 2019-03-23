@@ -16,6 +16,7 @@ namespace PiskvorkyGenius
         public int _playArea = 0;
         public int _players = 0;
         public int _body = 5;
+        public string _playerName = "";
 
         public Form1()
         {
@@ -26,7 +27,7 @@ namespace PiskvorkyGenius
             cmbPlayer3.SelectedIndex = 2;
             cmbPlayer4.SelectedIndex = 3;
             cmbLenght.SelectedIndex = 1;
-            cmbPlayArea.SelectedIndex = 0;
+            cmbPlayArea.SelectedIndex = 2;
             cmbPocetHracov.SelectedIndex = 0;
 
         }
@@ -147,24 +148,28 @@ namespace PiskvorkyGenius
                     { 
                     GridArena.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = cmbPlayer1.SelectedItem;
                         tick = cmbPlayer1.SelectedItem.ToString();
+                        _playerName = "1";
                     }
                     break;
                 case 1:
                     {
                         GridArena.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = cmbPlayer2.SelectedItem;
                         tick = cmbPlayer2.SelectedItem.ToString();
+                        _playerName = "2";
                     }
                     break;
                 case 2:
                     {
                         GridArena.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = cmbPlayer3.SelectedItem;
                         tick = cmbPlayer3.SelectedItem.ToString();
+                        _playerName = "3";
                     }
                     break;
                 case 3:
                     {
                         GridArena.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = cmbPlayer4.SelectedItem;
                         tick = cmbPlayer4.SelectedItem.ToString();
+                        _playerName = "4";
                     }
                     break;
             }
@@ -172,8 +177,13 @@ namespace PiskvorkyGenius
             int RowIndex = e.RowIndex;
             int ColIndex = e.ColumnIndex;
             Logika.AddTick(_playArea, RowIndex, ColIndex, tick);
-            lblDebug.Text = Logika.CheckWin(_playArea,tick, _body).ToString();
-            
+            if (Logika.CheckWin(_playArea, tick, _body))
+            {
+                lblDebug.Text = $"Vyhráva hráč č.{_playerName} so znakom {tick}";
+            }
+
+
+
         }
 
         private void label3_Click(object sender, EventArgs e)
