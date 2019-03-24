@@ -45,6 +45,8 @@
             this.lblPlayer3 = new System.Windows.Forms.Label();
             this.lblPlayer4 = new System.Windows.Forms.Label();
             this.lblDebug = new System.Windows.Forms.Label();
+            this.btnSaveTo = new System.Windows.Forms.Button();
+            this.btnLoadFrom = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.GridArena)).BeginInit();
             this.SuspendLayout();
             // 
@@ -285,11 +287,33 @@
             this.lblDebug.TabIndex = 19;
             this.lblDebug.Text = " ";
             // 
+            // btnSaveTo
+            // 
+            this.btnSaveTo.Location = new System.Drawing.Point(33, 619);
+            this.btnSaveTo.Name = "btnSaveTo";
+            this.btnSaveTo.Size = new System.Drawing.Size(217, 50);
+            this.btnSaveTo.TabIndex = 20;
+            this.btnSaveTo.Text = "Ulož hru";
+            this.btnSaveTo.UseVisualStyleBackColor = true;
+            this.btnSaveTo.Click += new System.EventHandler(this.btnSaveTo_Click);
+            // 
+            // btnLoadFrom
+            // 
+            this.btnLoadFrom.Location = new System.Drawing.Point(281, 619);
+            this.btnLoadFrom.Name = "btnLoadFrom";
+            this.btnLoadFrom.Size = new System.Drawing.Size(217, 50);
+            this.btnLoadFrom.TabIndex = 21;
+            this.btnLoadFrom.Text = "Načítaj hru";
+            this.btnLoadFrom.UseVisualStyleBackColor = true;
+            this.btnLoadFrom.Click += new System.EventHandler(this.btnLoadFrom_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(533, 648);
+            this.ClientSize = new System.Drawing.Size(533, 679);
+            this.Controls.Add(this.btnLoadFrom);
+            this.Controls.Add(this.btnSaveTo);
             this.Controls.Add(this.lblDebug);
             this.Controls.Add(this.lblPlayer4);
             this.Controls.Add(this.lblPlayer3);
@@ -336,6 +360,8 @@
         private System.Windows.Forms.Label lblPlayer3;
         private System.Windows.Forms.Label lblPlayer4;
         private System.Windows.Forms.Label lblDebug;
+        private System.Windows.Forms.Button btnSaveTo;
+        private System.Windows.Forms.Button btnLoadFrom;
     }
 }
 

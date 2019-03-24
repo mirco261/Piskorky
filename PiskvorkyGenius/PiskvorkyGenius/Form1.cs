@@ -143,7 +143,8 @@ namespace PiskvorkyGenius
             lblDebug.Text = "";
 
             //Pozerám sa, či políčko je už obsadené
-            if (GridArena.Rows[e.RowIndex].Cells[e.ColumnIndex].Value == null)
+            string s = string.Empty;
+            if (GridArena.Rows[e.RowIndex].Cells[e.ColumnIndex].Value == null || GridArena.Rows[e.RowIndex].Cells[e.ColumnIndex].Value == s )
             {
                 //Ak políčko nie je obsadené, idem ho obsadiť
                 switch (lastMove % _players)
@@ -184,7 +185,7 @@ namespace PiskvorkyGenius
                 int ColIndex = e.ColumnIndex;
                 Logika.AddTick(_playArea, RowIndex, ColIndex, tick);
 
-                            //Pozriem sa, či už hráč vyhral
+             //Pozriem sa, či už hráč vyhral
             if (Logika.CheckWin(_playArea, tick, _body))
             {
                 lblDebug.ForeColor = Color.Black;
@@ -216,6 +217,47 @@ namespace PiskvorkyGenius
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
+
+        }
+
+        private void btnSaveTo_Click(object sender, EventArgs e)
+        {
+            Logika.WriteToTxt(_playArea);
+        }
+
+        private void btnLoadFrom_Click(object sender, EventArgs e)
+        {
+            Logika.ReadFromTxt();
+
+            //vytiahnem si velkost areny z txt
+            int velkostAreny = Logika.ReadFromTxtLenght();
+
+            Logika.debug(velkostAreny);
+
+            //GridArena.Rows[].Cells[e.ColumnIndex].Value = cmbPlayer1.SelectedItem;
+
+            //vyčistím si plochu
+            GridArena.Columns.Clear();
+            GridArena.Rows.Clear();
+
+            //vytvorím si hraciu plochu v datagridview - riadky a stĺpce
+            for (int i = 0; i < velkostAreny; i++)
+            {
+                GridArena.Columns.Add("i", $"{i}");
+            }
+            for (int i = 0; i < velkostAreny; i++)
+            {
+                GridArena.Rows.Add();
+            }
+
+            //naplním si hraciu plochu znakmi
+            for (int i = 0; i < velkostAreny; i++)
+            {
+                for (int j = 0; j < velkostAreny; j++)
+                {
+                    GridArena.Rows[i].Cells[j].Value = Logika.ReadFromTxtTicks(i,j);
+                }
+            }
 
         }
     }

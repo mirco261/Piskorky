@@ -9,7 +9,6 @@ namespace PiskvorkyGenius
 {
     public static class Logika
     {
-        private static int _pocetHracov;
         public static int PocetHracov;
         public static string[,] Gameboard;
         public static int bod;
@@ -36,9 +35,6 @@ namespace PiskvorkyGenius
         {
             //vloženie ticku
             Gameboard[RowIndex, ColIndex] = tick;
-
-            //vynulujem counter
-            bod = 0;
 
             //zobrazenie v debug
             Debug.Write($"\n\nHráč: {tick}\n");
@@ -88,7 +84,6 @@ namespace PiskvorkyGenius
                         else
                         {
                             continue;
-                            return false;
                         }
                     }
                     else
@@ -130,7 +125,6 @@ namespace PiskvorkyGenius
                         else
                         {
                             continue;
-                            return false;
                         }
                     }
                     else
@@ -179,7 +173,6 @@ namespace PiskvorkyGenius
                         else
                         {
                             continue;
-                            return false;
                         }
                     }
                     else
@@ -228,7 +221,6 @@ namespace PiskvorkyGenius
                         else
                         {
                             continue;
-                            return false;
                         }
                     }
                     else
@@ -244,7 +236,83 @@ namespace PiskvorkyGenius
             lastTick = "";
             return false;
         }
-       
+
+        public static void WriteToTxt(int lenght)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append(lenght);
+            sb.AppendLine();
+            for (int i = 0; i < lenght; i++)
+            {
+                for (int j = 0; j < lenght; j++)
+                {
+                    sb.Append(Gameboard[i,j]);
+                }
+                sb.Append("\n");
+
+            }
+            Debug.Write($"\nZapisujem export: \n{ sb}\n");
+            string export = sb.ToString();
+            System.IO.File.WriteAllText(@"C:\Users\Public\Documents\piskvorky.txt", export);
+        }
+
+        /// <summary>
+        /// Načítam textový dokument a naplním si logickú vrstvu dátami
+        /// </summary>
+        public static void ReadFromTxt()
+        {
+            string[] import = System.IO.File.ReadAllLines(@"C:\Users\Public\Documents\piskvorky.txt");
+            int lenght = int.Parse(import[0]);
+            Debug.WriteLine($"Dľžka poľa: {lenght}");
+
+            //vytvorim gameboard
+            CreateGameboard(lenght);
+
+            //naplním si gameboard
+            for (int i = 1; i <= lenght; i++)
+            {
+                Debug.WriteLine($"Importný riadok {i} = {import[i]}");
+                for (int j = 0; j < lenght; j++)
+                {
+                    Gameboard[i-1, j] = (import[i][j]).ToString();
+                    Debug.WriteLine($"Riadok {i} znaky {Gameboard[i-1,j]}");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Načítam si veľkosť poľa
+        /// </summary>
+        /// <returns>veľkosť poľa</returns>
+        public static int ReadFromTxtLenght()
+        {
+            string[] import = System.IO.File.ReadAllLines(@"C:\Users\Public\Documents\piskvorky.txt");
+            int lenght = int.Parse(import[0]);
+            return lenght;
+        }
+
+        public static string ReadFromTxtTicks(int i, int j)
+        {
+            string c;
+            string[] import = System.IO.File.ReadAllLines(@"C:\Users\Public\Documents\piskvorky.txt");
+            return c = Gameboard[i, j];
+        }
+
+        //Do output logu si preverím, či mi načítalo zo súboru hraciu plochu
+        public static void debug(int lenght)
+        {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < lenght; i++)
+            {
+                for (int j = 0; j < lenght; j++)
+                {
+                    sb.Append(Gameboard[i, j]);
+                }
+                sb.Append("\n");
+
+            }
+            Debug.Write($"\nNačítal som z txt: \n{ sb}\n");
+        }
     }
 }
 
