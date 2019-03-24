@@ -72,7 +72,7 @@ namespace PiskvorkyGenius
                         if (lastTick == tick)
                         {
                             bod++;
-                            Debug.Write($"\nBody v riadku{i}: {bod}");
+                            Debug.Write($"\nBody v riadku {i}: {bod}");
                             lastTick = tick;
                         }
                         else
@@ -82,7 +82,7 @@ namespace PiskvorkyGenius
                         //Zistovanie či hráč vyhral alebo nie
                         if (bod == body)
                         {
-                            Debug.Write($"\nHráč: {tick} vyhráva");
+                            Debug.Write($"\nHráč: {tick} vyhráva\n");
                             return true;
                         }
                         else
@@ -114,7 +114,7 @@ namespace PiskvorkyGenius
                         if (lastTick == tick)
                         {
                             bod++;
-                            Debug.Write($"\nBody v stĺpci{i}: {bod}");
+                            Debug.Write($"\nBody v stĺpci {i}: {bod}");
                             lastTick = tick;
                         }
                         else
@@ -124,7 +124,7 @@ namespace PiskvorkyGenius
                         //Zistovanie či hráč vyhral alebo nie
                         if (bod == body)
                         {
-                            Debug.Write($"\nHráč: {tick} vyhráva");
+                            Debug.Write($"\nHráč: {tick} vyhráva\n");
                             return true;
                         }
                         else
@@ -160,7 +160,7 @@ namespace PiskvorkyGenius
                             if (Gameboard[k, l] == tick)
                             {
                                 bod++;
-                                Debug.Write($"\nBody v diagonale L-P{i}: {bod}");
+                                Debug.Write($"\nBody v diag L {i}: {bod}");
                             }
                             else
                             {
@@ -173,7 +173,7 @@ namespace PiskvorkyGenius
                         //Zistovanie či hráč vyhral alebo nie
                         if (bod == body)
                         {
-                            Debug.Write($"\nHráč: {tick} vyhráva");
+                            Debug.Write($"\nHráč: {tick} vyhráva\n");
                             return true;
                         }
                         else
@@ -209,7 +209,7 @@ namespace PiskvorkyGenius
                             if (Gameboard[k, l] == tick)
                             {
                                 bod++;
-                                Debug.Write($"\nBody v diagonale P-L{i}: {bod}");
+                                Debug.Write($"\nBody v diag P {i}: {bod}");
                             }
                             else
                             {
@@ -217,12 +217,12 @@ namespace PiskvorkyGenius
                             }
                             k++;
                             l--;
-                        } while (k < lenght && l < lenght);
+                        } while (k < lenght && l < lenght && l >= 0);
 
                         //Zistovanie či hráč vyhral alebo nie
                         if (bod == body)
                         {
-                            Debug.Write($"\nHráč: {tick} vyhráva");
+                            Debug.Write($"\nHráč: {tick} vyhráva\n");
                             return true;
                         }
                         else
@@ -238,7 +238,6 @@ namespace PiskvorkyGenius
                 }
             }
             #endregion
-
 
             //Nulovanie bodov po každom riadku
             bod = 0;

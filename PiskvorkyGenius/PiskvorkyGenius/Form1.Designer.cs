@@ -56,14 +56,14 @@
             this.GridArena.AllowUserToResizeRows = false;
             this.GridArena.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.GridArena.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.GridArena.ColumnHeadersHeight = 30;
+            this.GridArena.ColumnHeadersHeight = 40;
             this.GridArena.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.GridArena.ColumnHeadersVisible = false;
             this.GridArena.Location = new System.Drawing.Point(31, 178);
             this.GridArena.Margin = new System.Windows.Forms.Padding(4);
             this.GridArena.Name = "GridArena";
             this.GridArena.RowHeadersVisible = false;
-            this.GridArena.RowTemplate.Height = 30;
+            this.GridArena.RowTemplate.Height = 40;
             this.GridArena.Size = new System.Drawing.Size(467, 384);
             this.GridArena.TabIndex = 0;
             this.GridArena.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridArena_CellClick);
@@ -85,6 +85,7 @@
             // 
             // cmbPlayArea
             // 
+            this.cmbPlayArea.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbPlayArea.FormattingEnabled = true;
             this.cmbPlayArea.Items.AddRange(new object[] {
             "3 x 3",
@@ -99,7 +100,6 @@
             this.cmbPlayArea.Name = "cmbPlayArea";
             this.cmbPlayArea.Size = new System.Drawing.Size(150, 24);
             this.cmbPlayArea.TabIndex = 2;
-            this.cmbPlayArea.Text = "Vyber si z ponuky";
             this.cmbPlayArea.SelectedIndexChanged += new System.EventHandler(this.PlayArea_SelectedIndexChanged);
             // 
             // label1
@@ -115,6 +115,7 @@
             // 
             // cmbPocetHracov
             // 
+            this.cmbPocetHracov.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbPocetHracov.FormattingEnabled = true;
             this.cmbPocetHracov.Items.AddRange(new object[] {
             "2 hráči",
@@ -125,7 +126,6 @@
             this.cmbPocetHracov.Name = "cmbPocetHracov";
             this.cmbPocetHracov.Size = new System.Drawing.Size(150, 24);
             this.cmbPocetHracov.TabIndex = 4;
-            this.cmbPocetHracov.Text = "Vyber si z ponuky";
             this.cmbPocetHracov.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // label3
@@ -141,6 +141,7 @@
             // 
             // cmbLenght
             // 
+            this.cmbLenght.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbLenght.FormattingEnabled = true;
             this.cmbLenght.Items.AddRange(new object[] {
             "2",
@@ -153,7 +154,6 @@
             this.cmbLenght.Name = "cmbLenght";
             this.cmbLenght.Size = new System.Drawing.Size(150, 24);
             this.cmbLenght.TabIndex = 8;
-            this.cmbLenght.Text = "Na koľko x hráme";
             // 
             // label2
             // 
@@ -167,7 +167,9 @@
             // 
             // cmbPlayer1
             // 
+            this.cmbPlayer1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbPlayer1.FormattingEnabled = true;
+            this.cmbPlayer1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.cmbPlayer1.Items.AddRange(new object[] {
             "X",
             "○",
@@ -178,11 +180,11 @@
             this.cmbPlayer1.Name = "cmbPlayer1";
             this.cmbPlayer1.Size = new System.Drawing.Size(100, 24);
             this.cmbPlayer1.TabIndex = 11;
-            this.cmbPlayer1.Text = "Znak";
             this.cmbPlayer1.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
             // 
             // cmbPlayer2
             // 
+            this.cmbPlayer2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbPlayer2.FormattingEnabled = true;
             this.cmbPlayer2.Items.AddRange(new object[] {
             "X",
@@ -194,11 +196,11 @@
             this.cmbPlayer2.Name = "cmbPlayer2";
             this.cmbPlayer2.Size = new System.Drawing.Size(100, 24);
             this.cmbPlayer2.TabIndex = 12;
-            this.cmbPlayer2.Text = "Znak";
             this.cmbPlayer2.Visible = false;
             // 
             // cmbPlayer3
             // 
+            this.cmbPlayer3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbPlayer3.FormattingEnabled = true;
             this.cmbPlayer3.Items.AddRange(new object[] {
             "X",
@@ -210,11 +212,11 @@
             this.cmbPlayer3.Name = "cmbPlayer3";
             this.cmbPlayer3.Size = new System.Drawing.Size(100, 24);
             this.cmbPlayer3.TabIndex = 13;
-            this.cmbPlayer3.Text = "Znak";
             this.cmbPlayer3.Visible = false;
             // 
             // cmbPlayer4
             // 
+            this.cmbPlayer4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbPlayer4.FormattingEnabled = true;
             this.cmbPlayer4.Items.AddRange(new object[] {
             "X",
@@ -226,7 +228,6 @@
             this.cmbPlayer4.Name = "cmbPlayer4";
             this.cmbPlayer4.Size = new System.Drawing.Size(100, 24);
             this.cmbPlayer4.TabIndex = 14;
-            this.cmbPlayer4.Text = "Znak";
             this.cmbPlayer4.Visible = false;
             // 
             // lblPlayer1
@@ -280,15 +281,15 @@
             this.lblDebug.Location = new System.Drawing.Point(28, 587);
             this.lblDebug.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblDebug.Name = "lblDebug";
-            this.lblDebug.Size = new System.Drawing.Size(135, 29);
+            this.lblDebug.Size = new System.Drawing.Size(20, 29);
             this.lblDebug.TabIndex = 19;
-            this.lblDebug.Text = "Debugging";
+            this.lblDebug.Text = " ";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(533, 868);
+            this.ClientSize = new System.Drawing.Size(533, 648);
             this.Controls.Add(this.lblDebug);
             this.Controls.Add(this.lblPlayer4);
             this.Controls.Add(this.lblPlayer3);
@@ -309,7 +310,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Form1";
+            this.Text = "Piškvorky Genius";
             ((System.ComponentModel.ISupportInitialize)(this.GridArena)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

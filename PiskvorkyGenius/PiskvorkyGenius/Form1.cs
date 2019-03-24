@@ -66,9 +66,6 @@ namespace PiskvorkyGenius
             // int body = int.Parse(cmbLenght.SelectedItem.ToString());  // nefunguje - spýtat sa
             string tickToWint = cmbLenght.SelectedItem.ToString();
             _body = int.Parse(tickToWint);
-
-            //pre istotu si to zapíšem
-            lblDebug.Text = _playArea.ToString();
         }
 
 
@@ -142,48 +139,69 @@ namespace PiskvorkyGenius
         public int ColIndex = 0;
         private void GridArena_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            switch (lastMove % _players)
+            //Vynulujem si debug lbl pre ďalšie informácie
+            lblDebug.Text = "";
+
+            //Pozerám sa, či políčko je už obsadené
+            if (GridArena.Rows[e.RowIndex].Cells[e.ColumnIndex].Value == null)
             {
-                case 0:
-                    { 
-                    GridArena.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = cmbPlayer1.SelectedItem;
-                        tick = cmbPlayer1.SelectedItem.ToString();
-                        _playerName = "1";
-                    }
-                    break;
-                case 1:
-                    {
-                        GridArena.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = cmbPlayer2.SelectedItem;
-                        tick = cmbPlayer2.SelectedItem.ToString();
-                        _playerName = "2";
-                    }
-                    break;
-                case 2:
-                    {
-                        GridArena.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = cmbPlayer3.SelectedItem;
-                        tick = cmbPlayer3.SelectedItem.ToString();
-                        _playerName = "3";
-                    }
-                    break;
-                case 3:
-                    {
-                        GridArena.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = cmbPlayer4.SelectedItem;
-                        tick = cmbPlayer4.SelectedItem.ToString();
-                        _playerName = "4";
-                    }
-                    break;
-            }
-            lastMove++;
-            int RowIndex = e.RowIndex;
-            int ColIndex = e.ColumnIndex;
-            Logika.AddTick(_playArea, RowIndex, ColIndex, tick);
+                //Ak políčko nie je obsadené, idem ho obsadiť
+                switch (lastMove % _players)
+                {
+                    case 0:
+                        {
+                            GridArena.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = cmbPlayer1.SelectedItem;
+                            tick = cmbPlayer1.SelectedItem.ToString();
+                            _playerName = "1";
+                        }
+                        break;
+                    case 1:
+                        {
+                            GridArena.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = cmbPlayer2.SelectedItem;
+                            tick = cmbPlayer2.SelectedItem.ToString();
+                            _playerName = "2";
+                        }
+                        break;
+                    case 2:
+                        {
+                            GridArena.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = cmbPlayer3.SelectedItem;
+                            tick = cmbPlayer3.SelectedItem.ToString();
+                            _playerName = "3";
+                        }
+                        break;
+                    case 3:
+                        {
+                            GridArena.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = cmbPlayer4.SelectedItem;
+                            tick = cmbPlayer4.SelectedItem.ToString();
+                            _playerName = "4";
+                        }
+                        break;
+
+                }
+
+                //obsadenie políčka do logiky
+                int RowIndex = e.RowIndex;
+                int ColIndex = e.ColumnIndex;
+                Logika.AddTick(_playArea, RowIndex, ColIndex, tick);
+
+                            //Pozriem sa, či už hráč vyhral
             if (Logika.CheckWin(_playArea, tick, _body))
             {
+                lblDebug.ForeColor = Color.Black;
                 lblDebug.Text = $"Vyhráva hráč č.{_playerName} so znakom {tick}";
             }
 
+                //posuniem na ďalšieho hráča
+                lastMove++;
+            }
 
+            //ošetrenie že dané políčko je už obsadené
+            else
+            {
+                lblDebug.ForeColor = Color.Red;
+                lblDebug.Text = "Toto políčko je už obsadené";
 
+            }
         }
 
         private void label3_Click(object sender, EventArgs e)
