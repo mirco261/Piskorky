@@ -13,6 +13,9 @@ namespace PiskvorkyGenius
         public static string[,] Gameboard;
         public static int bod;
         public static string lastTick;
+        public static int GridVelkost = Export.ReadFromTxtLenght();
+        public static string sb = Export.ReadFromTxtGrid();
+
 
 
 
@@ -29,8 +32,13 @@ namespace PiskvorkyGenius
             }
         }
 
-
-
+        /// <summary>
+        /// Manuálne klikanie do hracieho poľa
+        /// </summary>
+        /// <param name="lenght"></param>
+        /// <param name="RowIndex"></param>
+        /// <param name="ColIndex"></param>
+        /// <param name="tick"></param>
         public static void AddTick(int lenght, int RowIndex, int ColIndex, string tick)
         {
             //vloženie ticku
@@ -48,6 +56,20 @@ namespace PiskvorkyGenius
             }
         }
 
+        /// <summary>
+        /// Automatické klikanie podľa txt súboru
+        /// </summary>
+        /// <param name="RowIndex"></param>
+        /// <param name="ColIndex"></param>
+        /// <param name="tick"></param>
+        public static void AddTick(int RowIndex, int ColIndex, string tick)
+        {
+            //vloženie ticku
+            Gameboard[RowIndex, ColIndex] = tick;
+        }
+
+
+
         public static bool CheckWin(int lenght, string tick, int body)
         {
             //Zadefinovanie
@@ -64,6 +86,7 @@ namespace PiskvorkyGenius
                     //zisťujem, či sa v políčku nachádza znak hráča
                     if (Gameboard[i, j] == tick)
                     {
+                        bod = 0;
                         //ak sa nachádza na predchádzajúcom políčku znak hráča, pridám mu bod
                         if (lastTick == tick)
                         {
@@ -102,6 +125,7 @@ namespace PiskvorkyGenius
                 //prechádzam jednotlivé stĺpce
                 for (int j = 0; j < lenght; j++)
                 {
+                    bod = 0;
                     //zisťujem, či sa v políčku nachádza znak hráča
                     if (Gameboard[j, i] == tick)
                     {
@@ -145,6 +169,7 @@ namespace PiskvorkyGenius
                     //zisťujem, či sa v políčku nachádza znak hráča
                     if (Gameboard[i, j] == tick)
                     {
+                        bod = 0;
                         int k = i;
                         int l = j;
                         //ak sa nachádza na predchádzajúcom políčku znak hráča, pridám mu bod
@@ -193,8 +218,10 @@ namespace PiskvorkyGenius
                     //zisťujem, či sa v políčku nachádza znak hráča
                     if (Gameboard[i, j] == tick)
                     {
+                        Debug.Write($"\nNašiel bod v diag P {i}{j}: {bod}");
                         int k = i;
                         int l = j;
+                        bod = 0;
                         //ak sa nachádza na predchádzajúcom políčku znak hráča, pridám mu bod
                         do
                         {
@@ -202,7 +229,7 @@ namespace PiskvorkyGenius
                             if (Gameboard[k, l] == tick)
                             {
                                 bod++;
-                                Debug.Write($"\nBody v diag P {i}: {bod}");
+                                Debug.Write($"\nPokračuje v diag P {k}{l}: {bod}");
                             }
                             else
                             {
@@ -237,82 +264,54 @@ namespace PiskvorkyGenius
             return false;
         }
 
-        public static void WriteToTxt(int lenght)
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append(lenght);
-            sb.AppendLine();
-            for (int i = 0; i < lenght; i++)
-            {
-                for (int j = 0; j < lenght; j++)
-                {
-                    sb.Append(Gameboard[i,j]);
-                }
-                sb.Append("\n");
-
-            }
-            Debug.Write($"\nZapisujem export: \n{ sb}\n");
-            string export = sb.ToString();
-            System.IO.File.WriteAllText(@"C:\Users\Public\Documents\piskvorky.txt", export);
-        }
-
         /// <summary>
-        /// Načítam textový dokument a naplním si logickú vrstvu dátami
+        /// Získaj pole gameboardu
         /// </summary>
-        public static void ReadFromTxt()
+        /// <param name="dlzka"></param>
+        /// <returns></returns>
+        public static string[,] GetGameboard(int dlzka)
         {
-            string[] import = System.IO.File.ReadAllLines(@"C:\Users\Public\Documents\piskvorky.txt");
-            int lenght = int.Parse(import[0]);
-            Debug.WriteLine($"Dľžka poľa: {lenght}");
-
-            //vytvorim gameboard
-            CreateGameboard(lenght);
-
-            //naplním si gameboard
-            for (int i = 1; i <= lenght; i++)
+            string[,] board = new string[dlzka, dlzka];
+            for (int i = 0; i < dlzka; i++)
             {
-                Debug.WriteLine($"Importný riadok {i} = {import[i]}");
-                for (int j = 0; j < lenght; j++)
+                for (int j = 0; j < dlzka; j++)
                 {
-                    Gameboard[i-1, j] = (import[i][j]).ToString();
-                    Debug.WriteLine($"Riadok {i} znaky {Gameboard[i-1,j]}");
+                    board[i, j] = Gameboard[i, j];
                 }
             }
+            return board;
         }
 
-        /// <summary>
-        /// Načítam si veľkosť poľa
-        /// </summary>
-        /// <returns>veľkosť poľa</returns>
-        public static int ReadFromTxtLenght()
-        {
-            string[] import = System.IO.File.ReadAllLines(@"C:\Users\Public\Documents\piskvorky.txt");
-            int lenght = int.Parse(import[0]);
-            return lenght;
-        }
 
-        public static string ReadFromTxtTicks(int i, int j)
-        {
-            string c;
-            string[] import = System.IO.File.ReadAllLines(@"C:\Users\Public\Documents\piskvorky.txt");
-            return c = Gameboard[i, j];
-        }
 
-        //Do output logu si preverím, či mi načítalo zo súboru hraciu plochu
-        public static void debug(int lenght)
-        {
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < lenght; i++)
-            {
-                for (int j = 0; j < lenght; j++)
-                {
-                    sb.Append(Gameboard[i, j]);
-                }
-                sb.Append("\n");
+        //public static string[,] WriteGameboard(int dlzka)
+        //{
+        //    string[,] board = new string[dlzka, dlzka];
+        //    for (int i = 0; i < dlzka; i++)
+        //    {
+        //        for (int j = 0; j < dlzka; j++)
+        //        {
+        //            board[i, j] = Gameboard[i, j];
+        //        }
+        //    }
+        //    return board;
+        //}
 
-            }
-            Debug.Write($"\nNačítal som z txt: \n{ sb}\n");
-        }
+        //public static void CreateGameboardFromTxt( int GridVelkost, string sb )
+        //{
+        //    string[,] HraciaPlocha = new string[GridVelkost, GridVelkost];
+
+        //    for (int i = 0; i < GridVelkost; i++)
+        //    {
+        //        for (int j = 0; j < GridVelkost; j++)
+        //        {
+        //            char c = sb[i];
+        //            HraciaPlocha[i, j] = c.ToString();
+        //            Debug.Write(HraciaPlocha[i, j]);
+        //        }
+        //    }
+        //    Debug.WriteLine("\nNaplnil som logiku z txt\n");
+        //}
     }
 }
 

@@ -280,7 +280,7 @@
             // 
             this.lblDebug.AutoSize = true;
             this.lblDebug.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lblDebug.Location = new System.Drawing.Point(28, 587);
+            this.lblDebug.Location = new System.Drawing.Point(28, 577);
             this.lblDebug.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblDebug.Name = "lblDebug";
             this.lblDebug.Size = new System.Drawing.Size(20, 29);

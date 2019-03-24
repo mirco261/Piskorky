@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace PiskvorkyGenius
 {
@@ -38,12 +39,19 @@ namespace PiskvorkyGenius
             return int.Parse(playArenaText.Remove(1));
         }
 
+        public int GetPointsToWin()
+        {
+            string pointsToWin = cmbLenght.SelectedItem.ToString();
+            return int.Parse(pointsToWin);
+        }
+
 
         private void button1_Click(object sender, EventArgs e)
         {
             //vyčistím si plochu
             GridArena.Columns.Clear();
             GridArena.Rows.Clear();
+            lblDebug.Text = "";
 
             //vytiahnem si veľkosť plochy
             string playArenaText = cmbPlayArea.SelectedItem.ToString();
@@ -63,7 +71,6 @@ namespace PiskvorkyGenius
             Logika.CreateGameboard(_playArea);
 
             //vytiahnem si na koľko sa má vyhrať
-            // int body = int.Parse(cmbLenght.SelectedItem.ToString());  // nefunguje - spýtat sa
             string tickToWint = cmbLenght.SelectedItem.ToString();
             _body = int.Parse(tickToWint);
         }
@@ -140,11 +147,15 @@ namespace PiskvorkyGenius
         private void GridArena_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             //Vynulujem si debug lbl pre ďalšie informácie
-            lblDebug.Text = "";
+            lblDebug.Text ="";
+
+            //nastavím správne body
+            string tickToWint = cmbLenght.SelectedItem.ToString();
+            _body = int.Parse(tickToWint);
+
 
             //Pozerám sa, či políčko je už obsadené
-            string s = string.Empty;
-            if (GridArena.Rows[e.RowIndex].Cells[e.ColumnIndex].Value == null || GridArena.Rows[e.RowIndex].Cells[e.ColumnIndex].Value == s )
+            if (GridArena.Rows[e.RowIndex].Cells[e.ColumnIndex].Value == null)
             {
                 //Ak políčko nie je obsadené, idem ho obsadiť
                 switch (lastMove % _players)
@@ -177,7 +188,6 @@ namespace PiskvorkyGenius
                             _playerName = "4";
                         }
                         break;
-
                 }
 
                 //obsadenie políčka do logiky
@@ -222,19 +232,15 @@ namespace PiskvorkyGenius
 
         private void btnSaveTo_Click(object sender, EventArgs e)
         {
-            Logika.WriteToTxt(_playArea);
+            Export.WriteToTxt(_playArea, _body);
         }
 
         private void btnLoadFrom_Click(object sender, EventArgs e)
         {
-            Logika.ReadFromTxt();
+            //Export.ReadFromTxt();
 
             //vytiahnem si velkost areny z txt
-            int velkostAreny = Logika.ReadFromTxtLenght();
-
-            Logika.debug(velkostAreny);
-
-            //GridArena.Rows[].Cells[e.ColumnIndex].Value = cmbPlayer1.SelectedItem;
+            int velkostAreny = Export.ReadFromTxtLenght();
 
             //vyčistím si plochu
             GridArena.Columns.Clear();
@@ -250,14 +256,35 @@ namespace PiskvorkyGenius
                 GridArena.Rows.Add();
             }
 
-            //naplním si hraciu plochu znakmi
+            //Vytvorím si hraciu plochu do logiky
+            Logika.CreateGameboard(Export.ReadFromTxtLenght());
+
+            //naplním si hraciu plochu znakmi vizualne
             for (int i = 0; i < velkostAreny; i++)
             {
                 for (int j = 0; j < velkostAreny; j++)
                 {
-                    GridArena.Rows[i].Cells[j].Value = Logika.ReadFromTxtTicks(i,j);
+                    //vkladám jednotlivé hodnoty do vizuálneho režimu
+                    GridArena.Rows[i].Cells[j].Value = Export.ReadFromTxtTicks(i, j);
+
+                    //vkladám jednotlivé hodnoty do logického režimu
+                    Logika.AddTick(i, j, Export.ReadFromTxtTicks(i, j));
+                    if (GridArena.Rows[i].Cells[j].Value.ToString() == " ")
+                    {
+                        GridArena.Rows[i].Cells[j].Value = null;
+                        string c = null;
+                        Logika.AddTick(i, j, c);
+                    }
                 }
             }
+            Debug.WriteLine("\nNaplnil som vizualne formulár z txt\n");
+
+            //predvyplním správne hodnoty na frm
+            cmbPlayArea.SelectedIndex = Export.ReadFromTxtLenght()-3;
+            cmbLenght.SelectedIndex = Export.ReadFromTxtPoints()-2;
+
+
+
 
         }
     }
