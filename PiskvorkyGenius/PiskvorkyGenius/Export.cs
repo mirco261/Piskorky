@@ -15,15 +15,28 @@ namespace PiskvorkyGenius
         /// Zapísanie poľa do txt
         /// </summary>
         /// <param name="lenght"></param>
-        public static void WriteToTxt(int lenght, int points)
+        public static void WriteToTxt(int lenght, int points, int players, int tick1, int tick2, int tick3, int tick4, int last)
         {
             string[,] HraciaPlocha = new string[lenght, lenght];
             HraciaPlocha = Logika.GetGameboard(lenght);
             StringBuilder sb = new StringBuilder();
-            sb.Append(lenght);
+            sb.Append(lenght);  //veľkosť poľa
             sb.AppendLine();
-            sb.Append(points);
+            sb.Append(points);  //počet bodov na koľko sa hrá
             sb.AppendLine();
+            sb.Append(players); //počet aktívnych hráčov
+            sb.AppendLine();
+            sb.Append(tick1); //znak hráča 1
+            sb.AppendLine();
+            sb.Append(tick2); //znak hráča 2
+            sb.AppendLine();
+            sb.Append(tick3); //znak hráča 3
+            sb.AppendLine();
+            sb.Append(tick4); //znak hráča 4
+            sb.AppendLine();
+            sb.Append(last); //posledný hráč ktorý urobil tick
+            sb.AppendLine();
+
             for (int i = 0; i < lenght; i++)
             {
                 for (int j = 0; j < lenght; j++)
@@ -63,6 +76,80 @@ namespace PiskvorkyGenius
         }
 
         /// <summary>
+        /// Načítam textový dokument s informáciou koľko bodov potrebujem k výhre
+        /// </summary>
+        public static int ReadFromTxtPlayers()
+        {
+            string[] import = System.IO.File.ReadAllLines(@"C:\Users\Public\Documents\piskvorky.txt");
+
+            //dlžka pola - premenna
+            int points = int.Parse(import[2]);
+            Debug.WriteLine($"Počet aktívnych hráčov: {points}");
+            return points;
+        }
+
+        /// <summary>
+        /// Načítam textový dokument s informáciou o znaku hráča č.1
+        /// </summary>
+        public static int ReadFromTxtPlayer1tick()
+        {
+            string[] import = System.IO.File.ReadAllLines(@"C:\Users\Public\Documents\piskvorky.txt");
+
+            //dlžka pola - premenna
+            int tick = int.Parse(import[3]);
+            return tick;
+        }
+
+        /// <summary>
+        /// Načítam textový dokument s informáciou o znaku hráča č.2
+        /// </summary>
+        public static int ReadFromTxtPlayer2tick()
+        {
+            string[] import = System.IO.File.ReadAllLines(@"C:\Users\Public\Documents\piskvorky.txt");
+
+            //dlžka pola - premenna
+            int tick = int.Parse(import[4]);
+            return tick;
+        }
+
+        /// <summary>
+        /// Načítam textový dokument s informáciou o znaku hráča č.3
+        /// </summary>
+        public static int ReadFromTxtPlayer3tick()
+        {
+            string[] import = System.IO.File.ReadAllLines(@"C:\Users\Public\Documents\piskvorky.txt");
+
+            //dlžka pola - premenna
+            int tick = int.Parse(import[5]);
+            return tick;
+        }
+
+        /// <summary>
+        /// Načítam textový dokument s informáciou o znaku hráča č.4
+        /// </summary>
+        public static int ReadFromTxtPlayer4tick()
+        {
+            string[] import = System.IO.File.ReadAllLines(@"C:\Users\Public\Documents\piskvorky.txt");
+
+            //dlžka pola - premenna
+            int tick = int.Parse(import[6]);
+            return tick;
+        }
+
+        /// <summary>
+        /// Načítam textový dokument s informáciou poslednom hráčovi
+        /// </summary>
+        public static int ReadFromTxtLastPlayerTick()
+        {
+            string[] import = System.IO.File.ReadAllLines(@"C:\Users\Public\Documents\piskvorky.txt");
+
+            //dlžka pola - premenna
+            int lasttick = int.Parse(import[7]);
+            return lasttick;
+        }
+
+
+        /// <summary>
         /// Načítam textový dokument s poľom znakov
         /// </summary>
         /// <returns></returns>
@@ -76,7 +163,7 @@ namespace PiskvorkyGenius
 
             //Vytvorenie stringu 
             StringBuilder sb = new StringBuilder();
-            for (int i = 2; i < lenght+2; i++)
+            for (int i = 8; i < lenght+8; i++)
             {
                 sb.Append(import[i]);
                 sb.Append("\n");
@@ -110,11 +197,11 @@ namespace PiskvorkyGenius
         /// <returns></returns>
         public static string ReadFromTxtTicks(int i, int j)
         {
-            string c;
+            string c="";
             string[] import = System.IO.File.ReadAllLines(@"C:\Users\Public\Documents\piskvorky.txt");
             int lenght = int.Parse(import[0]);
-            //vytiahnem si znak. ku i som pridal 2(1.pozicia je veľkosť pola)(2.pozícia je počet bodov)
-            return c = import[i+2][j].ToString();
+            //vytiahnem si znak. ku i som pridal 8(1.pozicia je veľkosť pola)(2.pozícia je počet bodov)
+            return c = import[i+8][j].ToString();
         }
 
         //Do output logu si preverím, či mi načítalo zo súboru hraciu plochu

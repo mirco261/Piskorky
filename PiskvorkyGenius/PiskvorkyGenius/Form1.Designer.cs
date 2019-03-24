@@ -47,6 +47,7 @@
             this.lblDebug = new System.Windows.Forms.Label();
             this.btnSaveTo = new System.Windows.Forms.Button();
             this.btnLoadFrom = new System.Windows.Forms.Button();
+            this.lblTick = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.GridArena)).BeginInit();
             this.SuspendLayout();
             // 
@@ -307,11 +308,21 @@
             this.btnLoadFrom.UseVisualStyleBackColor = true;
             this.btnLoadFrom.Click += new System.EventHandler(this.btnLoadFrom_Click);
             // 
+            // lblTick
+            // 
+            this.lblTick.AutoSize = true;
+            this.lblTick.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lblTick.Location = new System.Drawing.Point(452, 577);
+            this.lblTick.Name = "lblTick";
+            this.lblTick.Size = new System.Drawing.Size(0, 29);
+            this.lblTick.TabIndex = 22;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(533, 679);
+            this.Controls.Add(this.lblTick);
             this.Controls.Add(this.btnLoadFrom);
             this.Controls.Add(this.btnSaveTo);
             this.Controls.Add(this.lblDebug);
@@ -362,6 +373,7 @@
         private System.Windows.Forms.Label lblDebug;
         private System.Windows.Forms.Button btnSaveTo;
         private System.Windows.Forms.Button btnLoadFrom;
+        private System.Windows.Forms.Label lblTick;
     }
 }
 

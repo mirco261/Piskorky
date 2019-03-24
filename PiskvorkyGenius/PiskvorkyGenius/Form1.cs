@@ -45,6 +45,32 @@ namespace PiskvorkyGenius
             return int.Parse(pointsToWin);
         }
 
+        public int Players()
+        {
+            string players = cmbPocetHracov.SelectedItem.ToString();
+            return int.Parse(players.Remove(1));
+        }
+
+        public int Player1()
+        {
+            return cmbPlayer1.SelectedIndex;
+        }
+
+        public int Player2()
+        {
+            return cmbPlayer2.SelectedIndex;
+        }
+
+        public int Player3()
+        {
+            return cmbPlayer3.SelectedIndex;
+        }
+
+        public int Player4()
+        {
+            return cmbPlayer4.SelectedIndex;
+        }
+
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -52,6 +78,10 @@ namespace PiskvorkyGenius
             GridArena.Columns.Clear();
             GridArena.Rows.Clear();
             lblDebug.Text = "";
+            lblTick.Text = "";
+
+            //lastmove nastavím na nula
+            lastMove = 0;
 
             //vytiahnem si veľkosť plochy
             string playArenaText = cmbPlayArea.SelectedItem.ToString();
@@ -204,6 +234,7 @@ namespace PiskvorkyGenius
 
                 //posuniem na ďalšieho hráča
                 lastMove++;
+                lblTick.Text = lastMove.ToString();
             }
 
             //ošetrenie že dané políčko je už obsadené
@@ -211,7 +242,6 @@ namespace PiskvorkyGenius
             {
                 lblDebug.ForeColor = Color.Red;
                 lblDebug.Text = "Toto políčko je už obsadené";
-
             }
         }
 
@@ -232,7 +262,13 @@ namespace PiskvorkyGenius
 
         private void btnSaveTo_Click(object sender, EventArgs e)
         {
-            Export.WriteToTxt(_playArea, _body);
+            int players = Players();
+            int player1 = Player1();
+            int player2 = Player2();
+            int player3 = Player3();
+            int player4 = Player4();
+            int lastPlayer = lastMove;
+            Export.WriteToTxt(_playArea, _body, players, player1, player2, player3, player4, lastPlayer);
         }
 
         private void btnLoadFrom_Click(object sender, EventArgs e)
@@ -242,9 +278,11 @@ namespace PiskvorkyGenius
             //vytiahnem si velkost areny z txt
             int velkostAreny = Export.ReadFromTxtLenght();
 
+
             //vyčistím si plochu
             GridArena.Columns.Clear();
             GridArena.Rows.Clear();
+
 
             //vytvorím si hraciu plochu v datagridview - riadky a stĺpce
             for (int i = 0; i < velkostAreny; i++)
@@ -256,8 +294,11 @@ namespace PiskvorkyGenius
                 GridArena.Rows.Add();
             }
 
+
+
             //Vytvorím si hraciu plochu do logiky
             Logika.CreateGameboard(Export.ReadFromTxtLenght());
+
 
             //naplním si hraciu plochu znakmi vizualne
             for (int i = 0; i < velkostAreny; i++)
@@ -276,12 +317,31 @@ namespace PiskvorkyGenius
                         Logika.AddTick(i, j, c);
                     }
                 }
+
             }
+
+            //pozriem, ako vyzerá naplnený grid
             Debug.WriteLine("\nNaplnil som vizualne formulár z txt\n");
+            for (int i = 0; i < velkostAreny; i++)
+            {
+                for (int j = 0; j < velkostAreny; j++)
+                {
+                    Debug.Write($"{i},{j}:{GridArena.Rows[i].Cells[j].Value} ");
+                }
+                Debug.WriteLine("\n");
+            }
+            Debug.WriteLine($"Počet riadkov{GridArena.RowCount}\n");
 
             //predvyplním správne hodnoty na frm
             cmbPlayArea.SelectedIndex = Export.ReadFromTxtLenght()-3;
             cmbLenght.SelectedIndex = Export.ReadFromTxtPoints()-2;
+            cmbPocetHracov.SelectedIndex = Export.ReadFromTxtPlayers()-2;
+            cmbPlayer1.SelectedIndex = Export.ReadFromTxtPlayer1tick();
+            cmbPlayer2.SelectedIndex = Export.ReadFromTxtPlayer2tick();
+            cmbPlayer3.SelectedIndex = Export.ReadFromTxtPlayer3tick();
+            cmbPlayer4.SelectedIndex = Export.ReadFromTxtPlayer4tick();
+            lastMove = Export.ReadFromTxtLastPlayerTick();
+            lblTick.Text = Export.ReadFromTxtLastPlayerTick().ToString();
 
 
 

@@ -27,7 +27,7 @@ namespace PiskvorkyGenius
             {
                 for (int j = 0; j < _playArea; j++)
                 {
-                    Gameboard[i, j]=" ";
+                    Gameboard[i, j]= " ";
                 }
             }
         }
@@ -86,7 +86,7 @@ namespace PiskvorkyGenius
                     //zisťujem, či sa v políčku nachádza znak hráča
                     if (Gameboard[i, j] == tick)
                     {
-                        bod = 0;
+
                         //ak sa nachádza na predchádzajúcom políčku znak hráča, pridám mu bod
                         if (lastTick == tick)
                         {
@@ -114,6 +114,7 @@ namespace PiskvorkyGenius
                         bod = 0;
                     }
                 }
+                bod = 0;
             }
             #endregion
 
@@ -125,7 +126,6 @@ namespace PiskvorkyGenius
                 //prechádzam jednotlivé stĺpce
                 for (int j = 0; j < lenght; j++)
                 {
-                    bod = 0;
                     //zisťujem, či sa v políčku nachádza znak hráča
                     if (Gameboard[j, i] == tick)
                     {
@@ -156,6 +156,7 @@ namespace PiskvorkyGenius
                         bod = 0;
                     }
                 }
+                bod = 0;
             }
             #endregion
 
