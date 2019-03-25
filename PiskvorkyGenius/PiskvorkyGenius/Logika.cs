@@ -13,11 +13,9 @@ namespace PiskvorkyGenius
         public static string[,] Gameboard;
         public static int bod;
         public static string lastTick;
-        public static int GridVelkost = Export.ReadFromTxtLenght();
-        public static string sb = Export.ReadFromTxtGrid();
-
-
-
+        public static int GridVelkost;
+        public static string sb;
+        
 
         public static void CreateGameboard(int _playArea)
         {
@@ -31,6 +29,8 @@ namespace PiskvorkyGenius
                 }
             }
         }
+
+        
 
         /// <summary>
         /// Manuálne klikanie do hracieho poľa
@@ -54,6 +54,14 @@ namespace PiskvorkyGenius
                 }
                 Debug.Write("\n");
             }
+
+            //zapísanie do stack
+            //Tah novyTah = new Tah();
+            //novyTah.tick = tick;
+            //novyTah.indexRiadka = RowIndex;
+            //novyTah.indexStlpca = ColIndex;
+            //novyTah.velkostPlochy = lenght;
+            //Poradie.AddStack(novyTah);
         }
 
         /// <summary>
@@ -67,6 +75,23 @@ namespace PiskvorkyGenius
             //vloženie ticku
             Gameboard[RowIndex, ColIndex] = tick;
         }
+
+        
+
+        /// <summary>
+        /// Vymaže posledny tick
+        /// </summary>
+        /// <param name="lenght"></param>
+        /// <param name="tick"></param>
+        /// <param name="body"></param>
+        /// <returns></returns>
+        //public static string RemoveTick(Tah krokSpat)
+        //{
+        //    int i = krokSpat.indexRiadka;
+        //    int j = krokSpat.indexStlpca;
+        //    return Gameboard[krokSpat.indexRiadka,krokSpat.indexStlpca];
+
+        //}
 
 
 
@@ -282,37 +307,6 @@ namespace PiskvorkyGenius
             }
             return board;
         }
-
-
-
-        //public static string[,] WriteGameboard(int dlzka)
-        //{
-        //    string[,] board = new string[dlzka, dlzka];
-        //    for (int i = 0; i < dlzka; i++)
-        //    {
-        //        for (int j = 0; j < dlzka; j++)
-        //        {
-        //            board[i, j] = Gameboard[i, j];
-        //        }
-        //    }
-        //    return board;
-        //}
-
-        //public static void CreateGameboardFromTxt( int GridVelkost, string sb )
-        //{
-        //    string[,] HraciaPlocha = new string[GridVelkost, GridVelkost];
-
-        //    for (int i = 0; i < GridVelkost; i++)
-        //    {
-        //        for (int j = 0; j < GridVelkost; j++)
-        //        {
-        //            char c = sb[i];
-        //            HraciaPlocha[i, j] = c.ToString();
-        //            Debug.Write(HraciaPlocha[i, j]);
-        //        }
-        //    }
-        //    Debug.WriteLine("\nNaplnil som logiku z txt\n");
-        //}
     }
 }
 

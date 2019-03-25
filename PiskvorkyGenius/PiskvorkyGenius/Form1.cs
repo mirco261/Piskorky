@@ -15,6 +15,7 @@ namespace PiskvorkyGenius
     {
 
         public int _playArea = 0;
+
         public int _players = 0;
         public int _body = 5;
         public string _playerName = "";
@@ -95,7 +96,10 @@ namespace PiskvorkyGenius
             for (int i = 0; i < _playArea; i++)
             {
                 GridArena.Rows.Add();
+                GridArena.Rows[i].Height = GridArena.Height/_playArea-1;
             }
+
+
 
             //vytvorím si plochu v logike
             Logika.CreateGameboard(_playArea);
@@ -103,6 +107,10 @@ namespace PiskvorkyGenius
             //vytiahnem si na koľko sa má vyhrať
             string tickToWint = cmbLenght.SelectedItem.ToString();
             _body = int.Parse(tickToWint);
+
+            //vytvorím si stack
+            Poradie.CreateStack();
+
         }
 
 
@@ -176,6 +184,9 @@ namespace PiskvorkyGenius
         public int ColIndex = 0;
         private void GridArena_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            #region
+
+
             //Vynulujem si debug lbl pre ďalšie informácie
             lblDebug.Text ="";
 
@@ -225,8 +236,11 @@ namespace PiskvorkyGenius
                 int ColIndex = e.ColumnIndex;
                 Logika.AddTick(_playArea, RowIndex, ColIndex, tick);
 
-             //Pozriem sa, či už hráč vyhral
-            if (Logika.CheckWin(_playArea, tick, _body))
+                //vložím krok do stacku
+                Poradie.AddStack(lastMove, RowIndex, ColIndex);
+
+                //Pozriem sa, či už hráč vyhral
+                if (Logika.CheckWin(_playArea, tick, _body))
             {
                 lblDebug.ForeColor = Color.Black;
                 lblDebug.Text = $"Vyhráva hráč č.{_playerName} so znakom {tick}";
@@ -243,7 +257,12 @@ namespace PiskvorkyGenius
                 lblDebug.ForeColor = Color.Red;
                 lblDebug.Text = "Toto políčko je už obsadené";
             }
+
+
+
+
         }
+        #endregion
 
         private void label3_Click(object sender, EventArgs e)
         {
@@ -342,10 +361,22 @@ namespace PiskvorkyGenius
             cmbPlayer4.SelectedIndex = Export.ReadFromTxtPlayer4tick();
             lastMove = Export.ReadFromTxtLastPlayerTick();
             lblTick.Text = Export.ReadFromTxtLastPlayerTick().ToString();
+        }
 
+        private void lblDebug_Click(object sender, EventArgs e)
+        {
 
+        }
 
+        private void btnStepBack_Click(object sender, EventArgs e)
+        {
+            Tah krokSpat = Poradie.StepBack();
+            GridArena.Rows[krokSpat.indexRiadka].Cells[krokSpat.indexStlpca].Value = null;
 
+            Logika.AddTick(_playArea, krokSpat.indexRiadka, krokSpat.indexStlpca, null);
+
+            lastMove--;
+            lblTick.Text = lastMove.ToString();
         }
     }
 }

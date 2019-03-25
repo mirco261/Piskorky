@@ -76,7 +76,7 @@ namespace PiskvorkyGenius
         }
 
         /// <summary>
-        /// Načítam textový dokument s informáciou koľko bodov potrebujem k výhre
+        /// Načítam textový dokument s informáciou počet aktívnych hráčov
         /// </summary>
         public static int ReadFromTxtPlayers()
         {
